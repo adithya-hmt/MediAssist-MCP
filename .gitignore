@@ -6,7 +6,7 @@ __pycache__/
 .mypy_cache/
 .pytest_cache/
 .streamlit/
+.omx/
 dist/
 build/
 *.log
-

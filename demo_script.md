@@ -1,5 +1,7 @@
 # MediAssist-MCP Demo Script
 
+MediAssist-MCP currently runs as an offline-first synthetic healthcare workflow demo. External API integration is intentionally not included in this hackathon version to preserve privacy, reliability, and easy reproducibility.
+
 ## 1. Quick 2-3 Minute Live Demo
 
 1. Open the Streamlit frontend.
@@ -21,7 +23,8 @@
   symptom checking, triage, BMI, medicines, nutrition, scheduling, risk, and wellness support.
 - The project is ready to connect to a Prompt Opinion Marketplace style catalog through MCP.
 - No paid APIs or API keys are required.
-- Optional Ollama support can be added later, but the core build already works fully offline.
+- No account login, external healthcare database, PHI, diagnosis, or treatment claim is required for the local demo.
+- Optional API ideas are documentation-only for this hackathon version.
 
 ## 3. Terminal Commands
 
@@ -32,6 +35,12 @@ source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
 python server.py
+```
+
+Run the offline test suite:
+
+```bash
+python -m unittest discover -s tests
 ```
 
 In a second terminal for the Streamlit frontend:

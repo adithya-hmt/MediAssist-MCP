@@ -2,6 +2,7 @@
 
 MediAssist-MCP is a simple, reliable, hackathon-ready healthcare MCP server built with Python and FastMCP.
 It exposes synthetic healthcare tools that can plug into MCP clients, the Prompt Opinion Marketplace, and a small Streamlit frontend.
+MediAssist-MCP currently runs as an offline-first synthetic healthcare workflow demo. External API integration is intentionally not included in this hackathon version to preserve privacy, reliability, and easy reproducibility.
 
 ## What MCP Is
 
@@ -15,6 +16,14 @@ That makes it a strong fit for hackathon demos where you want interoperability w
 - Potential impact: it covers common demo workflows like triage, medicine lookup, and scheduling
 - Feasibility: it is local-only, synthetic-only, and easy to run on a MacBook Apple Silicon
 
+## Offline-First Boundary
+
+The hackathon version does not implement OpenAI, cloud, paid API, real FHIR, real EHR, external healthcare database, secret, token, service-account, or login-based integrations.
+All healthcare demo outputs come from synthetic JSON data and deterministic Python logic.
+Future API readiness is documentation-only for now.
+Local testing must not require a network call, key, account login, real patient data, or PHI.
+The demo output is not diagnosis, treatment, or clinical guidance.
+
 ## What Is Included
 
 - Python + FastMCP server
@@ -25,7 +34,7 @@ That makes it a strong fit for hackathon demos where you want interoperability w
 - Comments and docstrings
 - Error handling and logging
 - Optional local Ollama helper
-- FHIR-ready notes
+- FHIR-ready notes for documentation only
 - SHARP context placeholders
 - Marketplace publishing notes
 
@@ -91,9 +100,17 @@ MCP_TRANSPORT=streamable-http MCP_HOST=127.0.0.1 MCP_PORT=8000 python server.py
 streamlit run frontend/app.py
 ```
 
+### Offline tests
+
+```bash
+python -m unittest discover -s tests
+```
+
 ## Test With MCP Inspector
 
-The easiest inspector flow is Streamable HTTP:
+The offline verification path is the local test command above.
+MCP Inspector is optional and useful only when you already have it available locally.
+The easiest optional inspector flow is Streamable HTTP:
 
 1. Start the MCP server with:
 
@@ -101,7 +118,7 @@ The easiest inspector flow is Streamable HTTP:
 python server.py
 ```
 
-2. Start the Inspector:
+2. Start the Inspector if it is already available in your environment:
 
 ```bash
 npx -y @modelcontextprotocol/inspector
@@ -132,7 +149,7 @@ That sequence shows breadth, local reliability, and practical healthcare usefuln
 
 ## Prompt Opinion Integration Notes
 
-MediAssist-MCP is designed to be easy to catalog in a Prompt Opinion Marketplace style flow because:
+MediAssist-MCP is designed to be easy to catalog in a Prompt Opinion Marketplace style flow later because:
 
 - the tool names are stable and readable
 - every response is structured JSON
@@ -140,7 +157,7 @@ MediAssist-MCP is designed to be easy to catalog in a Prompt Opinion Marketplace
 - no real patient data is used
 - the server can run over stdio or Streamable HTTP
 
-Suggested integration approach:
+Future documentation-only integration approach:
 
 1. Register the MCP server endpoint in Prompt Opinion.
 2. Map each tool name to its schema and sample output.
@@ -160,7 +177,7 @@ Suggested integration approach:
 
 The project includes `integrations/ollama_optional.py` as a free/local helper.
 It is not required for the core demo and is safe to ignore.
-If you want to experiment with it, set `OLLAMA_ENABLED=true` in `.env`.
+Leave `OLLAMA_ENABLED=false` for the offline-first hackathon version.
 
 ## Local FastMCP Compatibility Layer
 
@@ -195,6 +212,12 @@ python server.py
 
 ```bash
 streamlit run frontend/app.py
+```
+
+### Run offline tests
+
+```bash
+python -m unittest discover -s tests
 ```
 
 ### Start the MCP Inspector workflow

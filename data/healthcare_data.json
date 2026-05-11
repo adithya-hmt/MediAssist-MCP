@@ -59,7 +59,7 @@
     "paracetamol": {
       "aliases": ["acetaminophen", "tylenol"],
       "usage": "Used for fever and mild to moderate pain relief.",
-      "dosage": "Follow the label or clinician guidance. Typical adult doses are spaced several hours apart.",
+      "dosage": "This offline demo does not provide dosing instructions. Use a real label or licensed clinician for dosing decisions.",
       "warnings": [
         "Do not combine with other products containing acetaminophen.",
         "Avoid exceeding the daily maximum dose.",
@@ -69,7 +69,7 @@
     "ibuprofen": {
       "aliases": ["advil", "motrin"],
       "usage": "Used for pain, inflammation, and fever reduction.",
-      "dosage": "Take with food and only as directed on the label or by a clinician.",
+      "dosage": "This offline demo does not provide dosing instructions. Use a real label or licensed clinician for dosing decisions.",
       "warnings": [
         "Avoid if you have active stomach ulcer symptoms.",
         "Use caution with kidney disease.",
@@ -79,7 +79,7 @@
     "cetirizine": {
       "aliases": ["zyrtec"],
       "usage": "Used for allergy symptoms such as sneezing, runny nose, and itching.",
-      "dosage": "Usually taken once daily, but follow the package or clinical instructions.",
+      "dosage": "This offline demo does not provide dosing instructions. Use a real label or licensed clinician for dosing decisions.",
       "warnings": [
         "May cause drowsiness in some people.",
         "Be careful when driving until you know how it affects you."
@@ -88,7 +88,7 @@
     "omeprazole": {
       "aliases": ["prilosec"],
       "usage": "Used for acid reflux and stomach acid symptoms.",
-      "dosage": "Usually taken before meals, but follow the package or clinician guidance.",
+      "dosage": "This offline demo does not provide dosing instructions. Use a real label or licensed clinician for dosing decisions.",
       "warnings": [
         "Use only as directed if symptoms last longer than the label suggests.",
         "Check with a clinician if you have ongoing stomach pain or weight loss."

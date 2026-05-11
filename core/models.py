@@ -16,7 +16,8 @@ class BaseToolResponse(BaseModel):
     tool_name: str
     request_id: str = Field(default_factory=lambda: str(uuid4()))
     disclaimer: str = (
-        "This response uses synthetic data only and is not a substitute for a licensed clinician."
+        "Synthetic demo output only. This does not diagnose, treat, replace professional care, "
+        "or process PHI."
     )
 
 

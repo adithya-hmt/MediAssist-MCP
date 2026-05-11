@@ -17,6 +17,17 @@ from core.helpers import bmi_category, calculate_bmi, normalize_date, normalize_
 from core.repository import find_medicine_record, find_mood_record, find_nutrition_record, load_healthcare_data
 
 
+DEMO_SAFETY_NOTE = (
+    "Synthetic demo output only. This does not diagnose, treat, replace professional care, or process PHI."
+)
+
+
+def _with_safety_note(payload: dict[str, Any]) -> dict[str, Any]:
+    """Attach the offline demo safety note to frontend-visible local outputs."""
+
+    return {**payload, "safety_note": DEMO_SAFETY_NOTE}
+
+
 def _tokenize(text: str) -> set[str]:
     """Split text into simple lowercase tokens for keyword matching."""
 
@@ -28,12 +39,12 @@ def _default_symptom_response() -> dict[str, Any]:
 
     data = load_healthcare_data()
     default = data["symptom_default"]
-    return {
+    return _with_safety_note({
         "possible_conditions": default["possible_conditions"],
         "confidence_score": default["confidence"],
         "recommendation": default["recommendation"],
         "red_flags": default["red_flags"],
-    }
+    })
 
 
 def symptom_checker_logic(symptom: str) -> dict[str, Any]:
@@ -66,12 +77,12 @@ def symptom_checker_logic(symptom: str) -> dict[str, Any]:
 
     profile = data["symptoms"][best_key]
     confidence = round(max(best_score, profile.get("confidence", 0.8)), 2)
-    return {
+    return _with_safety_note({
         "possible_conditions": profile["possible_conditions"],
         "confidence_score": confidence,
         "recommendation": profile["recommendation"],
         "red_flags": profile["red_flags"],
-    }
+    })
 
 
 def emergency_triage_logic(symptoms: str) -> dict[str, Any]:
@@ -86,7 +97,7 @@ def emergency_triage_logic(symptoms: str) -> dict[str, Any]:
     low_matches = [term for term in triage_rules["low"] if term in cleaned]
 
     if critical_matches:
-        return {
+        return _with_safety_note({
             "urgency_level": "critical",
             "matched_keywords": critical_matches,
             "reasoning": [
@@ -97,10 +108,10 @@ def emergency_triage_logic(symptoms: str) -> dict[str, Any]:
                 "Seek emergency care now.",
                 "Call local emergency services if this is happening outside the demo.",
             ],
-        }
+        })
 
     if medium_matches:
-        return {
+        return _with_safety_note({
             "urgency_level": "medium",
             "matched_keywords": medium_matches,
             "reasoning": [
@@ -111,10 +122,10 @@ def emergency_triage_logic(symptoms: str) -> dict[str, Any]:
                 "Arrange prompt medical advice.",
                 "Watch for worsening or new red-flag symptoms.",
             ],
-        }
+        })
 
     if low_matches:
-        return {
+        return _with_safety_note({
             "urgency_level": "low",
             "matched_keywords": low_matches,
             "reasoning": [
@@ -125,9 +136,9 @@ def emergency_triage_logic(symptoms: str) -> dict[str, Any]:
                 "Monitor symptoms and rest.",
                 "Escalate if the symptoms change or intensify.",
             ],
-        }
+        })
 
-    return {
+    return _with_safety_note({
         "urgency_level": "low",
         "matched_keywords": [],
         "reasoning": [
@@ -138,7 +149,7 @@ def emergency_triage_logic(symptoms: str) -> dict[str, Any]:
             "Use supportive care and observe for changes.",
             "Ask a clinician if symptoms persist or become more concerning.",
         ],
-    }
+    })
 
 
 def bmi_calculator_logic(weight: float, height: float) -> dict[str, Any]:
@@ -166,13 +177,13 @@ def bmi_calculator_logic(weight: float, height: float) -> dict[str, Any]:
         ],
     }
 
-    return {
+    return _with_safety_note({
         "weight_kg": float(weight),
         "height_cm": float(height),
         "bmi": bmi_value,
         "category": category,
         "health_advice": advice_map[category],
-    }
+    })
 
 
 def medicine_info_logic(medicine_name: str) -> dict[str, Any]:
@@ -182,22 +193,22 @@ def medicine_info_logic(medicine_name: str) -> dict[str, Any]:
     record = find_medicine_record(cleaned_name)
 
     if record is None:
-        return {
+        return _with_safety_note({
             "medicine_name": cleaned_name,
             "usage": "No exact synthetic match was found, so this is general medicine guidance.",
-            "dosage": "Follow the package label or a licensed clinician's instructions.",
+            "dosage": "This offline demo does not provide dosing instructions.",
             "warnings": [
                 "Check for allergies before taking any medicine.",
                 "Read the label carefully and avoid doubling ingredients.",
             ],
-        }
+        })
 
-    return {
+    return _with_safety_note({
         "medicine_name": record["display_name"],
         "usage": record["usage"],
         "dosage": record["dosage"],
         "warnings": record["warnings"],
-    }
+    })
 
 
 def nutrition_recommendation_logic(condition: str) -> dict[str, Any]:
@@ -207,7 +218,7 @@ def nutrition_recommendation_logic(condition: str) -> dict[str, Any]:
     record = find_nutrition_record(cleaned)
 
     if record is None:
-        return {
+        return _with_safety_note({
             "condition": cleaned,
             "diet_suggestions": [
                 "Build meals around vegetables, fruit, whole grains, and lean protein.",
@@ -217,15 +228,15 @@ def nutrition_recommendation_logic(condition: str) -> dict[str, Any]:
             "foods_to_include": ["vegetables", "fruit", "whole grains", "lean protein"],
             "foods_to_limit": ["very salty food", "sugary drinks", "ultra-processed snacks"],
             "hydration_tips": ["Drink water regularly.", "Adjust fluids to your activity level and climate."],
-        }
+        })
 
-    return {
+    return _with_safety_note({
         "condition": cleaned,
         "diet_suggestions": record["diet_suggestions"],
         "foods_to_include": record["foods_to_include"],
         "foods_to_limit": record["foods_to_limit"],
         "hydration_tips": record["hydration_tips"],
-    }
+    })
 
 
 def appointment_scheduler_logic(name: str, appointment_date: str | date) -> dict[str, Any]:
@@ -240,14 +251,14 @@ def appointment_scheduler_logic(name: str, appointment_date: str | date) -> dict
     confirmation_seed = sha1(f"{cleaned_name}|{normalized_date.isoformat()}".encode("utf-8")).hexdigest()[:8].upper()
     confirmation_id = f"MA-{normalized_date.strftime('%Y%m%d')}-{confirmation_seed}"
 
-    return {
+    return _with_safety_note({
         "confirmation_id": confirmation_id,
         "name": cleaned_name,
         "appointment_date": normalized_date.isoformat(),
         "clinic_name": clinic_name,
         "status": "confirmed",
         "message": "This is a synthetic confirmation for demo and testing only.",
-    }
+    })
 
 
 def mental_health_support_logic(mood: str) -> dict[str, Any]:
@@ -256,7 +267,7 @@ def mental_health_support_logic(mood: str) -> dict[str, Any]:
     cleaned = normalize_text(mood).lower()
     profile = find_mood_record(cleaned) or find_mood_record("overwhelmed") or load_healthcare_data()["moods"]["overwhelmed"]
 
-    return {
+    return _with_safety_note({
         "mood": mood,
         "guidance": profile["guidance"],
         "calming_suggestions": profile["calming_suggestions"],
@@ -264,7 +275,7 @@ def mental_health_support_logic(mood: str) -> dict[str, Any]:
             "If this reflects a real crisis or self-harm risk, contact local emergency services "
             "or a trusted crisis line immediately."
         ),
-    }
+    })
 
 
 def health_risk_assessment_logic(age: int, smoking: bool, diabetes: bool) -> dict[str, Any]:
@@ -317,7 +328,7 @@ def health_risk_assessment_logic(age: int, smoking: bool, diabetes: bool) -> dic
             "A structured plan can help reduce risk over time.",
         ]
 
-    return {
+    return _with_safety_note({
         "age": age,
         "smoking": smoking_flag,
         "diabetes": diabetes_flag,
@@ -325,5 +336,4 @@ def health_risk_assessment_logic(age: int, smoking: bool, diabetes: bool) -> dic
         "risk_level": risk_level,
         "contributing_factors": contributing_factors or ["no major synthetic risk flags"],
         "advice": advice,
-    }
-
+    })
