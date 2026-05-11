@@ -1,7 +1,7 @@
 # SHARP Context Placeholders
 
 SHARP-style integration placeholders are intentionally left here for future expansion.
-MediAssist-MCP currently runs as an offline-first synthetic healthcare workflow demo. External API integration is intentionally not included in this hackathon version to preserve privacy, reliability, and easy reproducibility.
+MediAssist-MCP runs by default as an offline-first synthetic healthcare workflow demo. Optional Gemini support is server-side only, disabled by default, and limited to synthetic care brief polishing.
 
 You can use this folder for:
 - secure healthcare partner context

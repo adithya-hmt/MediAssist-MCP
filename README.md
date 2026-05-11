@@ -1,8 +1,8 @@
 # MediAssist-MCP
 
-MediAssist-MCP is a simple, reliable, hackathon-ready healthcare MCP server built with Python and FastMCP.
-It exposes synthetic healthcare tools that can plug into MCP clients, the Prompt Opinion Marketplace, and a small Streamlit frontend.
-MediAssist-MCP currently runs as an offline-first synthetic healthcare workflow demo. External API integration is intentionally not included in this hackathon version to preserve privacy, reliability, and easy reproducibility.
+MediAssist-MCP is a healthcare MCP care-coordination toolkit built with Python and FastMCP.
+It converts synthetic patient context into structured triage, care briefs, FHIR-style bundles, SHARP-style context validation, and privacy-safe workflow outputs.
+MediAssist-MCP runs by default as an offline-first synthetic healthcare workflow demo. Optional Gemini support is server-side only, disabled by default, and limited to synthetic care brief polishing.
 
 ## What MCP Is
 
@@ -18,11 +18,12 @@ That makes it a strong fit for hackathon demos where you want interoperability w
 
 ## Offline-First Boundary
 
-The hackathon version does not implement OpenAI, cloud, paid API, real FHIR, real EHR, external healthcare database, secret, token, service-account, or login-based integrations.
+The default local mode does not require OpenAI, cloud, paid API, real FHIR, real EHR, external healthcare database, secret, token, service-account, or login-based integrations.
 All healthcare demo outputs come from synthetic JSON data and deterministic Python logic.
-Future API readiness is documentation-only for now.
+FHIR, EHR, and broader API readiness are documentation-only for now.
 Local testing must not require a network call, key, account login, real patient data, or PHI.
 The demo output is not diagnosis, treatment, or clinical guidance.
+Gemini support is optional, server-side only, disabled by default, and limited to synthetic care brief prose polishing when explicitly enabled.
 
 ## What Is Included
 
@@ -33,6 +34,7 @@ The demo output is not diagnosis, treatment, or clinical guidance.
 - Structured JSON responses
 - Comments and docstrings
 - Error handling and logging
+- Optional server-side Gemini care brief polishing
 - Optional local Ollama helper
 - FHIR-ready notes for documentation only
 - SHARP context placeholders
@@ -67,6 +69,8 @@ MediAssist-MCP/
 6. `appointment_scheduler(name: str, date: str)`
 7. `mental_health_support(mood: str)`
 8. `health_risk_assessment(age: int, smoking: bool, diabetes: bool)`
+9. `generate_care_brief(case_id: str = "case-alpha")`
+10. `check_gemini_readiness()`
 
 All of them use only synthetic healthcare data and simple local logic.
 
@@ -103,8 +107,29 @@ streamlit run frontend/app.py
 ### Offline tests
 
 ```bash
-python -m unittest discover -s tests
+pytest
 ```
+
+## Optional Gemini Setup
+
+MediAssist-MCP works without Gemini by default. No key is needed for local testing.
+
+For synthetic-only Gemini polishing, copy `.env.example` to `.env`, keep the key server-side, and set:
+
+```bash
+ENABLE_GEMINI=true
+GEMINI_API_KEY=PASTE_YOUR_GEMINI_API_KEY_HERE
+ALLOW_SYNTHETIC_EXTERNAL_CALLS=true
+GEMINI_MODEL_MODE=balanced
+```
+
+Balanced mode uses `gemini-2.5-flash`. Advanced mode uses `gemini-2.5-pro` only for final doctor handoff polishing and may cost more:
+
+```bash
+GEMINI_MODEL_MODE=advanced
+```
+
+Never use real patient data or PHI with Gemini. See `docs/gemini-setup.md` and `docs/public-deployment-security.md`.
 
 ## Test With MCP Inspector
 
@@ -217,7 +242,7 @@ streamlit run frontend/app.py
 ### Run offline tests
 
 ```bash
-python -m unittest discover -s tests
+pytest
 ```
 
 ### Start the MCP Inspector workflow

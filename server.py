@@ -16,6 +16,8 @@ from mcp.server.fastmcp import FastMCP
 from core.logging import configure_logging, get_logger
 from tools.appointment_scheduler import register_tools as register_appointment_tools
 from tools.bmi import register_tools as register_bmi_tools
+from tools.care_brief import register_tools as register_care_brief_tools
+from tools.gemini_readiness import register_tools as register_gemini_readiness_tools
 from tools.mental_health_support import register_tools as register_mental_health_tools
 from tools.medicine_info import register_tools as register_medicine_tools
 from tools.nutrition_recommendation import register_tools as register_nutrition_tools
@@ -56,6 +58,8 @@ register_risk_tools(mcp)
 register_triage_tools(mcp)
 register_nutrition_tools(mcp)
 register_mental_health_tools(mcp)
+register_care_brief_tools(mcp)
+register_gemini_readiness_tools(mcp)
 
 
 def main() -> None:

@@ -29,6 +29,7 @@ from services.healthcare import (  # noqa: E402
     nutrition_recommendation_logic,
     symptom_checker_logic,
 )
+from services.gemini_provider import gemini_readiness_status  # noqa: E402
 
 
 st.set_page_config(page_title="MediAssist-MCP", page_icon="🏥", layout="wide")
@@ -96,7 +97,7 @@ def render_home() -> None:
     )
 
     left, middle, right = st.columns(3)
-    left.metric("MCP Tools", "8")
+    left.metric("MCP Tools", "10")
     middle.metric("Data Mode", "Synthetic")
     right.metric("Paid APIs", "None")
 
@@ -235,8 +236,23 @@ PAGE_RENDERERS = {
 }
 
 
+def render_gemini_status() -> None:
+    """Render public-safe Gemini status without exposing any key details."""
+
+    status = gemini_readiness_status()
+    with st.sidebar.expander("Gemini status", expanded=False):
+        st.write(f"Gemini enabled: {'yes' if status['gemini_enabled'] else 'no'}")
+        st.write(f"Gemini configured: {'yes' if status['gemini_configured'] else 'no'}")
+        st.write(f"Model mode: {status['model_mode']}")
+        st.write(f"Default model: {status['default_model']}")
+        st.write(f"Advanced model: {status['advanced_model']}")
+        st.write(f"External calls allowed: {'yes' if status['allow_synthetic_external_calls'] else 'no'}")
+        st.write(f"Public demo mode: {'yes' if status['public_demo_mode'] else 'no'}")
+
+
 st.sidebar.title("MediAssist-MCP")
 st.sidebar.caption("Synthetic healthcare MCP server")
+render_gemini_status()
 page = st.sidebar.radio("Choose a tool", TOOL_OPTIONS)
 st.sidebar.markdown(
     """
@@ -253,4 +269,3 @@ st.sidebar.markdown(
 
 render_home()
 PAGE_RENDERERS[page]()
-

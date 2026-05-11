@@ -1,6 +1,6 @@
 # MediAssist-MCP Demo Script
 
-MediAssist-MCP currently runs as an offline-first synthetic healthcare workflow demo. External API integration is intentionally not included in this hackathon version to preserve privacy, reliability, and easy reproducibility.
+MediAssist-MCP runs by default as an offline-first synthetic healthcare workflow demo. Optional Gemini support is server-side only, disabled by default, and limited to synthetic care brief polishing.
 
 ## 1. Quick 2-3 Minute Live Demo
 

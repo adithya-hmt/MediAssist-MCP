@@ -1,7 +1,7 @@
 # Marketplace Publishing Notes
 
 Use these notes if you later publish MediAssist-MCP to an MCP marketplace or catalog.
-MediAssist-MCP currently runs as an offline-first synthetic healthcare workflow demo. External API integration is intentionally not included in this hackathon version to preserve privacy, reliability, and easy reproducibility.
+MediAssist-MCP runs by default as an offline-first synthetic healthcare workflow demo. Optional Gemini support is server-side only, disabled by default, and limited to synthetic care brief polishing.
 
 Recommended checklist:
 - Keep the server name short and recognizable.
