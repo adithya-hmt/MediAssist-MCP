@@ -18,16 +18,6 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from services.healthcare import (  # noqa: E402
-    appointment_scheduler_logic,
-    bmi_calculator_logic,
-    emergency_triage_logic,
-    health_risk_assessment_logic,
-    mental_health_support_logic,
-    medicine_info_logic,
-    nutrition_recommendation_logic,
-    symptom_checker_logic,
-)
 from services.fhir_bundle import export_fhir_bundle as export_fhir_bundle_logic  # noqa: E402
 from services.gemini_provider import gemini_readiness_status  # noqa: E402
 from services.workflow_primitives import (  # noqa: E402
