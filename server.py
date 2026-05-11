@@ -61,8 +61,8 @@ register_mental_health_tools(mcp)
 def main() -> None:
     """Start the MCP server with the chosen transport."""
 
-    # The default transport is stdio, which is the easiest path for MCP clients.
-    transport = os.getenv("MCP_TRANSPORT", "stdio")
+    # The default transport is Streamable HTTP so the project is easy to demo in a browser.
+    transport = os.getenv("MCP_TRANSPORT", "streamable-http")
     host = os.getenv("MCP_HOST", "127.0.0.1")
     port = int(os.getenv("MCP_PORT", "8000"))
 

@@ -76,7 +76,7 @@ cp .env.example .env
 ### MCP server with stdio transport
 
 ```bash
-python server.py
+MCP_TRANSPORT=stdio python server.py
 ```
 
 ### MCP server with Streamable HTTP transport
@@ -98,7 +98,7 @@ The easiest inspector flow is Streamable HTTP:
 1. Start the MCP server with:
 
 ```bash
-MCP_TRANSPORT=streamable-http MCP_HOST=127.0.0.1 MCP_PORT=8000 python server.py
+python server.py
 ```
 
 2. Start the Inspector:
@@ -161,6 +161,12 @@ Suggested integration approach:
 The project includes `integrations/ollama_optional.py` as a free/local helper.
 It is not required for the core demo and is safe to ignore.
 If you want to experiment with it, set `OLLAMA_ENABLED=true` in `.env`.
+
+## Local FastMCP Compatibility Layer
+
+This repository includes a bundled `mcp/` package that provides a lightweight FastMCP-compatible
+server implementation. That keeps the project runnable on this MacBook's Python 3.9 interpreter
+without depending on the external `mcp` PyPI package, which requires Python 3.10+.
 
 ## Safety Note
 
