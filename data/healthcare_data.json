@@ -1,0 +1,218 @@
+{
+  "metadata": {
+    "project_name": "MediAssist-MCP",
+    "data_policy": "synthetic-only",
+    "notes": [
+      "All examples are fake and safe for hackathon demos.",
+      "No real patient information is stored here."
+    ]
+  },
+  "symptoms": {
+    "fever": {
+      "keywords": ["fever", "temperature", "chills", "hot", "shivery"],
+      "possible_conditions": ["viral infection", "flu-like illness", "dehydration"],
+      "confidence": 0.92,
+      "recommendation": "Rest, hydrate, and monitor for new or worsening symptoms.",
+      "red_flags": ["confusion", "trouble breathing", "stiff neck", "persistent vomiting"]
+    },
+    "cough": {
+      "keywords": ["cough", "wheeze", "sneeze", "throat", "cold"],
+      "possible_conditions": ["common cold", "allergy flare-up", "viral bronchitis"],
+      "confidence": 0.88,
+      "recommendation": "Use supportive care and watch for breathing trouble or chest pain.",
+      "red_flags": ["chest pain", "blue lips", "severe shortness of breath"]
+    },
+    "headache": {
+      "keywords": ["headache", "migraine", "pressure", "temple", "pounding"],
+      "possible_conditions": ["tension headache", "migraine", "dehydration"],
+      "confidence": 0.9,
+      "recommendation": "Hydrate, rest in a quiet room, and track whether the pain changes pattern.",
+      "red_flags": ["sudden worst headache", "weakness", "vision loss", "fever with neck stiffness"]
+    },
+    "stomach pain": {
+      "keywords": ["stomach", "abdomen", "belly", "cramp", "nausea"],
+      "possible_conditions": ["indigestion", "gastritis", "food intolerance"],
+      "confidence": 0.84,
+      "recommendation": "Try bland foods, hydrate, and avoid heavy meals until symptoms settle.",
+      "red_flags": ["black stool", "severe one-sided pain", "fainting", "blood in vomit"]
+    },
+    "chest pain": {
+      "keywords": ["chest pain", "pressure", "tightness", "breathing", "radiating"],
+      "possible_conditions": ["acid reflux", "muscle strain", "heart-related emergency"],
+      "confidence": 0.95,
+      "recommendation": "Treat this as urgent if the pain is severe, sudden, or paired with breathing trouble.",
+      "red_flags": ["pressure spreading to arm", "sweating", "shortness of breath", "collapse"]
+    }
+  },
+  "symptom_default": {
+    "possible_conditions": ["mild viral illness", "stress response", "self-limited irritation"],
+    "confidence": 0.48,
+    "recommendation": "Use supportive care and reassess if it continues beyond 24 to 48 hours.",
+    "red_flags": ["rapid worsening", "severe pain", "breathing difficulty"]
+  },
+  "triage": {
+    "critical": ["chest pain", "trouble breathing", "collapse", "seizure", "blue lips", "stroke symptoms", "unresponsive"],
+    "medium": ["high fever", "persistent vomiting", "worsening pain", "dehydration", "new rash", "shortness of breath on exertion"],
+    "low": ["mild cough", "runny nose", "minor sore throat", "stable mild headache", "small bruise"]
+  },
+  "medicines": {
+    "paracetamol": {
+      "aliases": ["acetaminophen", "tylenol"],
+      "usage": "Used for fever and mild to moderate pain relief.",
+      "dosage": "Follow the label or clinician guidance. Typical adult doses are spaced several hours apart.",
+      "warnings": [
+        "Do not combine with other products containing acetaminophen.",
+        "Avoid exceeding the daily maximum dose.",
+        "Check liver safety if you have liver disease."
+      ]
+    },
+    "ibuprofen": {
+      "aliases": ["advil", "motrin"],
+      "usage": "Used for pain, inflammation, and fever reduction.",
+      "dosage": "Take with food and only as directed on the label or by a clinician.",
+      "warnings": [
+        "Avoid if you have active stomach ulcer symptoms.",
+        "Use caution with kidney disease.",
+        "Do not combine with other NSAIDs unless told to do so."
+      ]
+    },
+    "cetirizine": {
+      "aliases": ["zyrtec"],
+      "usage": "Used for allergy symptoms such as sneezing, runny nose, and itching.",
+      "dosage": "Usually taken once daily, but follow the package or clinical instructions.",
+      "warnings": [
+        "May cause drowsiness in some people.",
+        "Be careful when driving until you know how it affects you."
+      ]
+    },
+    "omeprazole": {
+      "aliases": ["prilosec"],
+      "usage": "Used for acid reflux and stomach acid symptoms.",
+      "dosage": "Usually taken before meals, but follow the package or clinician guidance.",
+      "warnings": [
+        "Use only as directed if symptoms last longer than the label suggests.",
+        "Check with a clinician if you have ongoing stomach pain or weight loss."
+      ]
+    }
+  },
+  "nutrition": {
+    "diabetes": {
+      "aliases": ["high blood sugar"],
+      "diet_suggestions": [
+        "Keep carbohydrates steady across the day.",
+        "Choose fiber-rich meals with vegetables, beans, and whole grains.",
+        "Pair carbs with protein to slow glucose spikes."
+      ],
+      "foods_to_include": ["vegetables", "beans", "whole grains", "lean protein", "nuts"],
+      "foods_to_limit": ["sugary drinks", "large refined-carb portions", "frequent sweets"],
+      "hydration_tips": ["Choose water most of the time.", "Keep a bottle nearby and sip regularly."]
+    },
+    "hypertension": {
+      "aliases": ["high blood pressure"],
+      "diet_suggestions": [
+        "Aim for lower sodium and more fresh foods.",
+        "Use heart-friendly fats in moderation.",
+        "Build meals around produce, legumes, and lean protein."
+      ],
+      "foods_to_include": ["leafy greens", "berries", "oats", "beans", "fish"],
+      "foods_to_limit": ["processed snacks", "very salty meals", "packaged soups", "fast food"],
+      "hydration_tips": ["Drink regularly throughout the day.", "Watch caffeine if it makes you feel off."]
+    },
+    "acid reflux": {
+      "aliases": ["heartburn", "gerd"],
+      "diet_suggestions": [
+        "Try smaller meals and avoid late-night heavy eating.",
+        "Notice which foods trigger symptoms for you.",
+        "Stay upright after meals when possible."
+      ],
+      "foods_to_include": ["oatmeal", "bananas", "plain rice", "lean protein", "non-citrus fruits"],
+      "foods_to_limit": ["spicy food", "fried food", "large chocolate portions", "peppermint", "carbonated drinks"],
+      "hydration_tips": ["Sip water between meals.", "Avoid lying down immediately after eating."]
+    },
+    "high cholesterol": {
+      "aliases": ["hyperlipidemia"],
+      "diet_suggestions": [
+        "Increase soluble fiber and reduce saturated fat.",
+        "Build more plant-forward meals into the week.",
+        "Use fish, beans, and oats as helpful staples."
+      ],
+      "foods_to_include": ["oats", "beans", "lentils", "fruit", "olive oil"],
+      "foods_to_limit": ["fried food", "processed meat", "butter-heavy meals", "trans fat snacks"],
+      "hydration_tips": ["Water and unsweetened beverages are a good default."]
+    }
+  },
+  "moods": {
+    "stressed": {
+      "aliases": ["stress", "busy", "overloaded"],
+      "guidance": [
+        "Pause and take a slower breath than usual.",
+        "Shrink the task to the next manageable step.",
+        "Reach out to a trusted person if your mind feels overloaded."
+      ],
+      "calming_suggestions": [
+        "Name five things you can see.",
+        "Unclench your jaw and shoulders.",
+        "Exhale longer than you inhale three times."
+      ]
+    },
+    "anxious": {
+      "aliases": ["anxiety", "nervous", "worried"],
+      "guidance": [
+        "Anxiety can make the moment feel bigger than it is.",
+        "Keep your focus on one small action.",
+        "A short walk or a glass of water can help reset the pace."
+      ],
+      "calming_suggestions": [
+        "Plant both feet on the floor.",
+        "Notice the temperature of the room.",
+        "Count four slow breaths."
+      ]
+    },
+    "sad": {
+      "aliases": ["down", "blue", "low"],
+      "guidance": [
+        "You do not need to solve everything today.",
+        "Gentle structure helps when energy is low.",
+        "A small meal, shower, or message to someone safe can be enough for now."
+      ],
+      "calming_suggestions": [
+        "Open a window if possible.",
+        "Sit near daylight for a few minutes.",
+        "Write down one thing that felt okay today."
+      ]
+    },
+    "overwhelmed": {
+      "aliases": ["overwhelmed", "burned out", "burnt out"],
+      "guidance": [
+        "Reduce the number of decisions in front of you.",
+        "Choose one thing to pause and one thing to finish.",
+        "Let support be practical, not perfect."
+      ],
+      "calming_suggestions": [
+        "Close extra tabs or apps.",
+        "Take 60 seconds away from the screen.",
+        "Return with a single next step."
+      ]
+    }
+  },
+  "risk": {
+    "age_35_plus": 1,
+    "age_50_plus": 2,
+    "age_65_plus": 3,
+    "smoking": 2,
+    "diabetes": 2,
+    "medium_threshold": 2,
+    "high_threshold": 4
+  },
+  "appointments": {
+    "clinic_name": "MediAssist Community Clinic"
+  },
+  "fhir": {
+    "resource_types": ["Patient", "Practitioner", "Appointment", "Observation", "Condition", "MedicationRequest"],
+    "placeholder_base_url": "https://example-fhir-server.invalid/fhir",
+    "notes": [
+      "This section exists so the project can evolve toward FHIR-friendly patterns later.",
+      "No real patient records are stored."
+    ]
+  }
+}
