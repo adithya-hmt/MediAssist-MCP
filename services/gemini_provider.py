@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import json
 import os
-import re
 from typing import Any
 
 try:
@@ -23,14 +22,12 @@ except Exception:  # pragma: no cover - depends on optional dependency install s
 PLACEHOLDER_KEY = "PASTE_YOUR_GEMINI_API_KEY_HERE"
 DEFAULT_MODEL = "gemini-2.5-flash"
 ADVANCED_MODEL = "gemini-2.5-pro"
-
 PHI_PATTERNS = [
     re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE),
     re.compile(r"\b(?:\+?1[-.\s]?)?(?:\(?\d{3}\)?[-.\s]?)\d{3}[-.\s]?\d{4}\b"),
     re.compile(r"\b\d{3}-\d{2}-\d{4}\b"),
-    re.compile(r"\b(?:mrn|medical record|ssn|dob|date of birth)\s*[:#]?\s*[A-Za-z0-9/.-]+\b", re.IGNORECASE),
+    re.compile(r"\b(?:mrn|medical record|ssn|dob|date of birth)\b", re.IGNORECASE),
 ]
-
 
 def _env_bool(name: str, default: bool = False) -> bool:
     fallback = "true" if default else "false"

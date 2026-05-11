@@ -1,0 +1,49 @@
+{
+  "tool_name": "generate_agent_team_replay",
+  "replay_id": "team-replay-demo-001",
+  "request_id": "team-replay-demo-001",
+  "case_id": "synthetic-patient-001",
+  "team_roles": ["safety_guard", "triage_agent", "risk_agent", "care_gap_agent", "follow_up_agent", "reviewer"],
+  "sequence": [
+    {
+      "step": 1,
+      "agent": "safety_guard",
+      "goal": "Confirm the demo is synthetic-only.",
+      "result": "Synthetic case accepted and PHI scan completed."
+    },
+    {
+      "step": 2,
+      "agent": "triage_agent",
+      "goal": "Summarize urgency from the symptom context.",
+      "result": "Urgency level identified as low."
+    },
+    {
+      "step": 3,
+      "agent": "risk_agent",
+      "goal": "Summarize the prevention/risk context.",
+      "result": "Risk level identified as medium."
+    },
+    {
+      "step": 4,
+      "agent": "care_gap_agent",
+      "goal": "Find coordination gaps that the clinician should review.",
+      "result": "Detected 3 care gaps."
+    },
+    {
+      "step": 5,
+      "agent": "follow_up_agent",
+      "goal": "Draft a follow-up plan for the handoff.",
+      "result": "prompt_clinician_review"
+    },
+    {
+      "step": 6,
+      "agent": "reviewer",
+      "goal": "Check that the replay never claims diagnosis or treatment.",
+      "result": "Clinician review required; no treatment claim issued."
+    }
+  ],
+  "handoff_summary": "Synthetic agent replay showing safety, triage, risk, gap review, follow-up, and human review.",
+  "requires_clinician_review": true,
+  "synthetic_data_notice": "Synthetic example only. No real patient data or PHI.",
+  "disclaimer": "Synthetic demo output only. This does not diagnose, treat, replace professional care, or process PHI."
+}

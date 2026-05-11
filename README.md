@@ -1,101 +1,155 @@
 # MediAssist-MCP
 
-MediAssist-MCP is a healthcare MCP care-coordination toolkit built with Python and FastMCP.
-It converts synthetic patient context into structured triage, care briefs, FHIR-style bundles, SHARP-style context validation, and privacy-safe workflow outputs.
-MediAssist-MCP runs by default as an offline-first synthetic healthcare workflow demo. Optional Gemini support is server-side only, disabled by default, and limited to synthetic care brief polishing.
+MediAssist-MCP is an interoperable care coordination toolkit for healthcare agents.
+It is offline-first, synthetic-only, and designed for hackathon demos where safety, structured outputs, and MCP interoperability matter more than raw model calls.
 
-## What MCP Is
+## 30-Second Summary
 
-MCP stands for Model Context Protocol.
-It is a standard way for AI apps to discover tools, call them with structured arguments, and receive structured JSON back.
-That makes it a strong fit for hackathon demos where you want interoperability without building a full custom API layer.
+Use MediAssist-MCP to turn a synthetic patient case into a full care-coordination artifact:
+triage, risk assessment, care gaps, follow-up planning, a FHIR-style bundle, a deterministic audit trace, and an agent-team replay.
 
-## Why This Project Works For The Hackathon
+The server works without Gemini. Optional Gemini polishing is server-side only, disabled by default, and limited to prose polishing for synthetic care briefs.
 
-- AI factor: it exposes multiple healthcare tools an AI agent can call
-- Potential impact: it covers common demo workflows like triage, medicine lookup, and scheduling
-- Feasibility: it is local-only, synthetic-only, and easy to run on a MacBook Apple Silicon
+## Why It Fits Agents Assemble
 
-## Offline-First Boundary
+- It demonstrates a practical multi-tool agent workflow instead of a single prompt demo.
+- It keeps the entire judge path synthetic, offline-first, and reproducible.
+- It exposes structured MCP outputs that are easy for agents and inspectors to consume.
+- It includes interoperability storytelling through a FHIR-style bundle and SHARP-style context validation.
+- It includes explicit PHI safety checks and human-review disclaimers.
 
-The default local mode does not require OpenAI, cloud, paid API, real FHIR, real EHR, external healthcare database, secret, token, service-account, or login-based integrations.
-All healthcare demo outputs come from synthetic JSON data and deterministic Python logic.
-FHIR, EHR, and broader API readiness are documentation-only for now.
-Local testing must not require a network call, key, account login, real patient data, or PHI.
-The demo output is not diagnosis, treatment, or clinical guidance.
-Gemini support is optional, server-side only, disabled by default, and limited to synthetic care brief prose polishing when explicitly enabled.
+## Architecture Overview
 
-## What Is Included
+- `server.py` registers the MCP tool surface.
+- `services/` contains the deterministic offline logic.
+- `tools/` exposes the logic through FastMCP tool wrappers.
+- `frontend/` provides a Streamlit command-center view.
+- `examples/` contains synthetic fallback JSON payloads for demos.
+- `docs/` contains the walkthrough, alignment, security, and marketplace notes.
 
-- Python + FastMCP server
-- Streamlit frontend for visual testing
-- Local JSON data source
-- Modular clean structure
-- Structured JSON responses
-- Comments and docstrings
-- Error handling and logging
-- Optional server-side Gemini care brief polishing
-- Optional local Ollama helper
-- FHIR-ready notes for documentation only
-- SHARP context placeholders
-- Marketplace publishing notes
+## MCP Tool Surface
 
-## Folder Layout
+### Original tools
 
-```text
-MediAssist-MCP/
-├── server.py
-├── core/
-├── data/
-├── demo_script.md
-├── docs/
-├── fhir/
-├── frontend/
-├── integrations/
-├── services/
-├── tools/
-├── requirements.txt
-├── README.md
-└── .env.example
-```
+- `symptom_checker`
+- `emergency_triage`
+- `bmi_calculator`
+- `medicine_info`
+- `nutrition_recommendation`
+- `appointment_scheduler`
+- `mental_health_support`
+- `health_risk_assessment`
 
-## Tools Exposed By MCP
+### New top-tier tools
 
-1. `symptom_checker(symptom: str)`
-2. `emergency_triage(symptoms: str)`
-3. `bmi_calculator(weight, height)`
-4. `medicine_info(medicine_name: str)`
-5. `nutrition_recommendation(condition: str)`
-6. `appointment_scheduler(name: str, date: str)`
-7. `mental_health_support(mood: str)`
-8. `health_risk_assessment(age: int, smoking: bool, diabetes: bool)`
-9. `generate_care_brief(case_id: str = "case-alpha")`
-10. `check_gemini_readiness()`
+- `run_full_care_journey`
+- `detect_care_gaps`
+- `generate_follow_up_plan`
+- `generate_audit_trace`
+- `generate_agent_team_replay`
+- `export_fhir_bundle`
+- `validate_sharp_context`
+- `phi_safety_check`
 
-All of them use only synthetic healthcare data and simple local logic.
+### Optional if present
 
-## Install
+- `generate_care_brief`
+- `check_gemini_readiness`
 
-```bash
-cd "/Users/siva/Documents/Copy 2/New/MediAssist-MCP"
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env
-```
+## Full Care Journey Workflow
+
+`run_full_care_journey(patient_case: dict)` is the primary demo path.
+
+It returns one structured artifact with:
+
+- `request_id`
+- `synthetic_patient_snapshot`
+- `safety_status`
+- `sharp_context_status`
+- `triage_result`
+- `risk_assessment`
+- `care_gaps`
+- `follow_up_plan`
+- `doctor_handoff_brief`
+- `patient_friendly_summary`
+- `fhir_resources_generated`
+- `audit_trace`
+- `disclaimers`
+- `synthetic_data_notice`
+
+The workflow is synthetic-only, requires no internet, and does not require Gemini.
+It must never claim diagnosis, treatment, or prescription advice.
+It always includes a clinician-review disclaimer.
+
+## Agent Team Replay
+
+`generate_agent_team_replay` shows the synthetic handoff sequence used in the demo.
+It is a storytelling artifact, not a real autonomous care workflow.
+Use it to explain how the safety, triage, risk, gap detection, and follow-up steps fit together.
+
+## FHIR-Style Bundle
+
+`export_fhir_bundle` produces a demo Bundle with:
+
+- `Patient`
+- `Encounter`
+- `Observation`
+- `Condition`
+- `MedicationRequest` when medication context exists
+- `Appointment` when follow-up context exists
+- `CarePlan`
+- `Provenance`
+
+Required metadata is included:
+
+- `synthetic_only: true`
+- `contains_phi: false`
+- `demo_use_only: true`
+- `disclaimer`
+
+This is a FHIR-style demo mapping only, not a certified clinical integration.
+
+## SHARP-Style Context Validation
+
+`validate_sharp_context` checks whether the supplied context is suitable for the synthetic care-coordination demo.
+It flags missing fields and keeps the allowed/blocked actions explicit so judges can see the access boundary.
+
+## PHI Safety
+
+`phi_safety_check` detects common PHI-like patterns, including:
+
+- email addresses
+- phone numbers
+- Aadhaar-like 12-digit numbers
+- credit-card-like 13-19 digit numbers
+- URLs
+- token/key-like strings
+
+The output includes:
+
+- `safe_to_process`
+- `detected_risks`
+- `redacted_preview`
+- `recommendation`
+- `synthetic_only_policy`
+- `disclaimer`
+
+## Optional Gemini Polishing
+
+Gemini is disabled by default.
+If enabled, it is used only for safe prose polishing of synthetic care briefs.
+It must not change triage, risk, red-flag logic, the FHIR bundle, or any disclaimer.
+
+The project runs fully offline without Gemini.
 
 ## Run Locally
 
-### MCP server with stdio transport
-
 ```bash
-MCP_TRANSPORT=stdio python server.py
-```
-
-### MCP server with Streamable HTTP transport
-
-```bash
-MCP_TRANSPORT=streamable-http MCP_HOST=127.0.0.1 MCP_PORT=8000 python server.py
+cd /home/wk/MediAssist-MCP
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python server.py
 ```
 
 ### Streamlit frontend
@@ -104,154 +158,59 @@ MCP_TRANSPORT=streamable-http MCP_HOST=127.0.0.1 MCP_PORT=8000 python server.py
 streamlit run frontend/app.py
 ```
 
-### Offline tests
+## Test
+
+Run the offline verification suite:
 
 ```bash
-pytest
+python -m compileall .
+python -m pytest
 ```
 
-## Optional Gemini Setup
+## Inspect MCP Tools
 
-MediAssist-MCP works without Gemini by default. No key is needed for local testing.
-
-For synthetic-only Gemini polishing, copy `.env.example` to `.env`, keep the key server-side, and set:
+Use the local MCP server with stdio or Streamable HTTP.
 
 ```bash
-ENABLE_GEMINI=true
-GEMINI_API_KEY=PASTE_YOUR_GEMINI_API_KEY_HERE
-ALLOW_SYNTHETIC_EXTERNAL_CALLS=true
-GEMINI_MODEL_MODE=balanced
+MCP_TRANSPORT=stdio python server.py
 ```
 
-Balanced mode uses `gemini-2.5-flash`. Advanced mode uses `gemini-2.5-pro` only for final doctor handoff polishing and may cost more:
-
-```bash
-GEMINI_MODEL_MODE=advanced
-```
-
-Never use real patient data or PHI with Gemini. See `docs/gemini-setup.md` and `docs/public-deployment-security.md`.
-
-## Test With MCP Inspector
-
-The offline verification path is the local test command above.
-MCP Inspector is optional and useful only when you already have it available locally.
-The easiest optional inspector flow is Streamable HTTP:
-
-1. Start the MCP server with:
-
-```bash
-python server.py
-```
-
-2. Start the Inspector if it is already available in your environment:
-
-```bash
-npx -y @modelcontextprotocol/inspector
-```
-
-3. Connect it to:
-
-```text
-http://127.0.0.1:8000/mcp
-```
-
-If you prefer stdio, launch the server command directly from the Inspector.
-
-## How To Demo For Judges
-
-The best short demo is:
-
-1. Open the Streamlit app.
-2. Run `Symptom checker` with `fever`.
-3. Show `Emergency triage` with `chest pain and shortness of breath`.
-4. Show `Medicine info` with `ibuprofen`.
-5. Show `BMI calculator` using the default numbers.
-6. Show `Nutrition recommendation` for `diabetes`.
-7. Show `Appointment scheduler` with a sample name and date.
-8. Finish with `Mental health support`.
-
-That sequence shows breadth, local reliability, and practical healthcare usefulness.
-
-## Prompt Opinion Integration Notes
-
-MediAssist-MCP is designed to be easy to catalog in a Prompt Opinion Marketplace style flow later because:
-
-- the tool names are stable and readable
-- every response is structured JSON
-- no paid API keys are required
-- no real patient data is used
-- the server can run over stdio or Streamable HTTP
-
-Future documentation-only integration approach:
-
-1. Register the MCP server endpoint in Prompt Opinion.
-2. Map each tool name to its schema and sample output.
-3. Use the Streamable HTTP endpoint at `http://127.0.0.1:8000/mcp` for live demos.
-4. Keep the JSON response shapes stable so agents and marketplace cards stay predictable.
-
-## Marketplace Publishing Steps
-
-1. Confirm the server runs locally with `python server.py`.
-2. Confirm the frontend works with `streamlit run frontend/app.py`.
-3. Confirm the tools are visible in MCP Inspector.
-4. Write a short catalog description that explains the synthetic-only healthcare use case.
-5. Publish the MCP endpoint to your marketplace or registry.
-6. Add sample tool calls and response examples for judges and reviewers.
-
-## Optional Ollama Support
-
-The project includes `integrations/ollama_optional.py` as a free/local helper.
-It is not required for the core demo and is safe to ignore.
-Leave `OLLAMA_ENABLED=false` for the offline-first hackathon version.
-
-## Local FastMCP Compatibility Layer
-
-This repository includes a bundled `mcp/` package that provides a lightweight FastMCP-compatible
-server implementation. That keeps the project runnable on this MacBook's Python 3.9 interpreter
-without depending on the external `mcp` PyPI package, which requires Python 3.10+.
-
-## Safety Note
-
-This project is synthetic by design.
-It is useful for prototyping and hackathon demos, but it is not medical advice and it is not a clinical system.
-
-## Terminal Commands
-
-### Full local setup
-
-```bash
-cd "/Users/siva/Documents/Copy 2/New/MediAssist-MCP"
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env
-```
-
-### Start the MCP server
-
-```bash
-python server.py
-```
-
-### Start the Streamlit frontend
-
-```bash
-streamlit run frontend/app.py
-```
-
-### Run offline tests
-
-```bash
-pytest
-```
-
-### Start the MCP Inspector workflow
+or
 
 ```bash
 MCP_TRANSPORT=streamable-http MCP_HOST=127.0.0.1 MCP_PORT=8000 python server.py
-npx -y @modelcontextprotocol/inspector
 ```
 
-## Demo Assets
+Then connect your inspector or client to the `/mcp` endpoint on the configured host and port.
 
-See `demo_script.md` for a short live demo script, judge-ready talking points, and copy-paste commands.
+## Streamlit Frontend
+
+The frontend is a safe demo dashboard that can display or load:
+
+- Full Care Journey output
+- FHIR bundle output
+- PHI safety output
+- SHARP context output
+- Agent Team Replay output
+
+It falls back to the bundled `examples/*.json` files when live execution is not available.
+
+## Prompt Opinion Marketplace Checklist
+
+- Synthetic data only
+- No real PHI
+- No hardcoded API keys
+- No `.env` committed
+- No diagnosis, treatment, or prescription claims
+- Stable tool names and structured JSON outputs
+- Clear safety disclaimer
+- Offline demo path works without Gemini
+- Example payloads are bundled for reviewers
+
+See `docs/prompt-opinion-marketplace-checklist.md` for the fuller submission checklist.
+
+## Safety Disclaimer
+
+This project is for synthetic demonstration and workflow prototyping only.
+It does not diagnose, treat, prescribe, or replace professional care.
+Any real-world deployment should be reviewed by qualified security, privacy, and clinical stakeholders.

@@ -1,0 +1,96 @@
+{
+  "tool_name": "generate_audit_trace",
+  "request_id": "audit-trace-demo-001",
+  "case_id": "synthetic-patient-001",
+  "generated_at": "2026-05-11T00:00:00Z",
+  "inputs_used": [
+    "age",
+    "care_setting",
+    "condition_context",
+    "current_medications",
+    "data_source",
+    "diabetes",
+    "follow_up_preference",
+    "last_follow_up_months_ago",
+    "patient_id",
+    "preventive_gaps",
+    "primary_symptom",
+    "smoking",
+    "symptom_description",
+    "synthetic",
+    "synthetic_data_notice"
+  ],
+  "safety_status": {
+    "safe_to_process": true,
+    "status": "synthetic_only_confirmed",
+    "synthetic_only": true,
+    "contains_phi": false,
+    "detected_risks": [],
+    "redacted_preview": "{\"case_id\": \"synthetic-patient-001\"}",
+    "recommendation": "Safe for synthetic demo workflows.",
+    "synthetic_only_policy": "Only synthetic demo inputs may flow through the hackathon workflows.",
+    "disclaimer": "Synthetic demo output only. This does not diagnose, treat, replace professional care, or process PHI.",
+    "note": "Only synthetic demo inputs may flow through the hackathon workflows."
+  },
+  "sharp_context_status": {
+    "status": "valid_synthetic_context",
+    "context_type": "care_coordination_demo",
+    "synthetic_context": true,
+    "required_fields_present": ["case_id", "primary_symptom", "symptom_description", "synthetic"],
+    "missing_fields": [],
+    "external_ehr_connection": false,
+    "authorization_required": false,
+    "phi_processed": false,
+    "allowed_actions": ["view_synthetic_brief", "generate_fhir_bundle", "run_follow_up_plan", "generate_audit_trace"],
+    "blocked_actions": ["connect_live_ehr", "write_prescription", "make_diagnosis"],
+    "notes": ["SHARP-style context is synthetic and demo-only.", "No external patient data stores are accessed."],
+    "synthetic_data_notice": "Synthetic example only. No real patient data or PHI.",
+    "disclaimer": "Synthetic demo output only. This does not diagnose, treat, replace professional care, or process PHI."
+  },
+  "triage_level": "low",
+  "risk_level": "medium",
+  "care_gap_count": 3,
+  "follow_up_type": "prompt_clinician_review",
+  "steps": [
+    {
+      "step": "1",
+      "name": "PHI safety scan",
+      "status": "synthetic_only_confirmed",
+      "evidence": "Synthetic data policy checked before any downstream coordination."
+    },
+    {
+      "step": "2",
+      "name": "SHARP validation",
+      "status": "valid_synthetic_context",
+      "evidence": "Only synthetic demo context was accepted."
+    },
+    {
+      "step": "3",
+      "name": "Triage and risk evaluation",
+      "status": "completed",
+      "evidence": "Urgency=low, risk=medium."
+    },
+    {
+      "step": "4",
+      "name": "Care-gap detection",
+      "status": "completed",
+      "evidence": "3 synthetic care gaps identified."
+    },
+    {
+      "step": "5",
+      "name": "Follow-up planning",
+      "status": "completed",
+      "evidence": "prompt_clinician_review"
+    },
+    {
+      "step": "6",
+      "name": "FHIR-style export",
+      "status": "completed",
+      "evidence": "FHIR-style bundle prepared for demo interoperability."
+    }
+  ],
+  "fhir_resources_referenced": ["Patient", "Encounter", "Observation", "Condition", "MedicationRequest", "CarePlan", "Provenance"],
+  "requires_clinician_review": true,
+  "synthetic_data_notice": "Synthetic example only. No real patient data or PHI.",
+  "disclaimer": "Synthetic demo output only. This does not diagnose, treat, replace professional care, or process PHI."
+}

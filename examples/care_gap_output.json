@@ -1,0 +1,39 @@
+{
+  "tool_name": "detect_care_gaps",
+  "request_id": "care-gaps-demo-001",
+  "case_id": "synthetic-patient-001",
+  "gap_count": 3,
+  "care_gaps": [
+    {
+      "gap_id": "follow-up-overdue",
+      "priority": "medium",
+      "title": "Follow-up overdue",
+      "rationale": "Last follow-up was 14 months ago.",
+      "suggested_action": "Schedule a clinician review for the synthetic case.",
+      "clinician_review_required": true
+    },
+    {
+      "gap_id": "preventive-gap-1",
+      "priority": "medium",
+      "title": "Preventive care gap",
+      "rationale": "annual diabetes review overdue",
+      "suggested_action": "Review the gap during the next synthetic handoff.",
+      "clinician_review_required": true
+    },
+    {
+      "gap_id": "diabetes-monitoring",
+      "priority": "medium",
+      "title": "Diabetes monitoring review",
+      "rationale": "Synthetic diabetes history suggests a monitoring and prevention review.",
+      "suggested_action": "Confirm routine monitoring and education topics in the handoff.",
+      "clinician_review_required": true
+    }
+  ],
+  "summary": [
+    "Synthetic care gaps were derived from follow-up timing, preventive review, and risk context.",
+    "A licensed clinician should review the handoff before any real-world action."
+  ],
+  "requires_clinician_review": true,
+  "synthetic_data_notice": "Synthetic example only. No real patient data or PHI.",
+  "disclaimer": "Synthetic demo output only. This does not diagnose, treat, replace professional care, or process PHI."
+}

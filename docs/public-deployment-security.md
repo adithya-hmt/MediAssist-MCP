@@ -1,26 +1,27 @@
 # Public Deployment Security
 
-MediAssist-MCP runs by default as an offline-first synthetic healthcare workflow demo. Optional Gemini support is server-side only, disabled by default, and limited to synthetic care brief polishing.
+MediAssist-MCP is synthetic-only and offline-first by default.
+Optional Gemini support is server-side only, disabled by default, and limited to prose polishing for synthetic care briefs.
 
-Use this checklist before deploying any public demo.
+## Before Public Deployment
 
-- [ ] `.env` not committed
-- [ ] Gemini key stored only in hosting secret manager
-- [ ] Gemini key not present in frontend bundle
-- [ ] GitHub secret scanning enabled
-- [ ] Public demo mode enabled
-- [ ] Synthetic-only examples verified
-- [ ] PHI safety checker enabled
-- [ ] Gemini disabled unless required
-- [ ] Rate limits or quota limits configured
-- [ ] No real patient data in logs
-- [ ] No diagnosis/treatment claims
-- [ ] Demo tested without API key
+- [ ] `.env` is not committed
+- [ ] `.env.example` contains placeholders only
+- [ ] Gemini key is stored only in a secret manager
+- [ ] Gemini key is not present in the frontend bundle
+- [ ] GitHub secret scanning is enabled
+- [ ] Public demo mode is enabled
+- [ ] Synthetic examples are verified
+- [ ] PHI safety checks are enabled
+- [ ] Gemini remains disabled unless explicitly required
+- [ ] No real patient data appears in logs
+- [ ] No diagnosis/treatment/prescription claims are made
+- [ ] The demo works without an API key
 
 ## Deployment Notes
 
-Gemini is optional and server-side only.
-The public frontend must never accept or display API keys.
-Care brief polishing may use Gemini only when `ENABLE_GEMINI=true`, `ALLOW_SYNTHETIC_EXTERNAL_CALLS=true`, the key is configured server-side, and the synthetic/PHI safety check passes.
-
-Do not deploy this project with real FHIR, EHR, external healthcare database, login, token, service account, or PHI handling unless a separate security review is completed.
+- The frontend should never display secrets.
+- The server must stay usable with no Gemini key at all.
+- Gemini may only polish prose and may not alter triage, risk, red flags, bundle content, or disclaimers.
+- Keep all demo data synthetic and de-identified.
+- Do not deploy real FHIR, EHR, login, token, service-account, or PHI handling in this hackathon version.

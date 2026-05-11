@@ -1,0 +1,32 @@
+{
+  "tool_name": "generate_follow_up_plan",
+  "request_id": "follow-up-demo-001",
+  "case_id": "synthetic-patient-001",
+  "recommended_follow_up_type": "prompt_clinician_review",
+  "timeframe": "within 24 to 72 hours",
+  "care_setting": "primary care",
+  "triage_level": "medium",
+  "risk_level": "medium",
+  "preparation_notes": [
+    "Bring the synthetic symptom summary and medication list to the handoff.",
+    "Ask the clinician to review preventive gaps and monitoring needs.",
+    "Keep the highest-priority care gap visible during review."
+  ],
+  "monitoring_points": [
+    "Track whether the symptoms improve, worsen, or change.",
+    "Review preventive and medication reconciliation gaps.",
+    "Escalate urgently if new red-flag symptoms appear."
+  ],
+  "patient_actions": [
+    "Use the synthetic summary for the clinician handoff.",
+    "Bring any current medications to the review."
+  ],
+  "clinician_actions": [
+    "Review the care gaps and decide whether additional evaluation is needed.",
+    "Confirm the follow-up interval before closing the visit."
+  ],
+  "requires_clinician_review": true,
+  "summary": "Synthetic follow-up plan for a medium triage case with medium risk. This is for coordination only and not a treatment plan.",
+  "synthetic_data_notice": "Synthetic example only. No real patient data or PHI.",
+  "disclaimer": "Synthetic demo output only. This does not diagnose, treat, replace professional care, or process PHI."
+}

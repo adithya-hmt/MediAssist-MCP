@@ -1,0 +1,205 @@
+{
+  "tool_name": "run_full_care_journey",
+  "request_id": "journey-demo-001",
+  "synthetic_patient_snapshot": {
+    "case_id": "synthetic-patient-001",
+    "case_label": "Demo Patient",
+    "age": 46,
+    "age_band": "40s",
+    "primary_symptom": "fever",
+    "symptom_description": "fever, chills, and fatigue",
+    "condition_context": "diabetes",
+    "current_medications": ["metformin"],
+    "care_setting": "primary care",
+    "follow_up_preference": "primary care",
+    "synthetic_data_notice": "Synthetic example only. No real patient data or PHI."
+  },
+  "safety_status": {
+    "safe_to_process": true,
+    "status": "synthetic_only_confirmed",
+    "synthetic_only": true,
+    "contains_phi": false,
+    "detected_risks": [],
+    "redacted_preview": "{\"case_id\": \"synthetic-patient-001\"}",
+    "recommendation": "Safe for synthetic demo workflows.",
+    "synthetic_only_policy": "Only synthetic demo inputs may flow through the hackathon workflows.",
+    "disclaimer": "Synthetic demo output only. This does not diagnose, treat, replace professional care, or process PHI.",
+    "note": "Only synthetic demo inputs may flow through the hackathon workflows."
+  },
+  "sharp_context_status": {
+    "status": "valid_synthetic_context",
+    "context_type": "care_coordination_demo",
+    "synthetic_context": true,
+    "required_fields_present": ["case_id", "primary_symptom", "symptom_description", "synthetic"],
+    "missing_fields": [],
+    "external_ehr_connection": false,
+    "authorization_required": false,
+    "phi_processed": false,
+    "allowed_actions": ["view_synthetic_brief", "generate_fhir_bundle", "run_follow_up_plan", "generate_audit_trace"],
+    "blocked_actions": ["connect_live_ehr", "write_prescription", "make_diagnosis"],
+    "notes": ["SHARP-style context is synthetic and demo-only.", "No external patient data stores are accessed."],
+    "synthetic_data_notice": "Synthetic example only. No real patient data or PHI.",
+    "disclaimer": "Synthetic demo output only. This does not diagnose, treat, replace professional care, or process PHI."
+  },
+  "triage_result": {
+    "tool_name": "emergency_triage",
+    "symptoms": "fever, chills, and fatigue",
+    "urgency_level": "low",
+    "matched_keywords": ["fever"],
+    "reasoning": ["Only low-risk patterns matched the symptom description.", "Supportive care and observation are reasonable for a mild demo scenario."],
+    "recommended_action": ["Monitor symptoms and rest.", "Escalate if the symptoms change or intensify."],
+    "safety_note": "Synthetic demo output only. This does not diagnose, treat, replace professional care, or process PHI."
+  },
+  "risk_assessment": {
+    "tool_name": "health_risk_assessment",
+    "age": 46,
+    "smoking": false,
+    "diabetes": true,
+    "risk_score": 3,
+    "risk_level": "medium",
+    "contributing_factors": ["age 35 to 49", "diabetes history"],
+    "advice": ["Review modifiable risk factors with a clinician.", "Use a steady plan for food, movement, and follow-up monitoring."],
+    "safety_note": "Synthetic demo output only. This does not diagnose, treat, replace professional care, or process PHI."
+  },
+  "care_gaps": {
+    "tool_name": "detect_care_gaps",
+    "request_id": "care-gaps-demo-001",
+    "case_id": "synthetic-patient-001",
+    "gap_count": 3,
+    "care_gaps": [
+      {
+        "gap_id": "follow-up-overdue",
+        "priority": "medium",
+        "title": "Follow-up overdue",
+        "rationale": "Last follow-up was 14 months ago.",
+        "suggested_action": "Schedule a clinician review for the synthetic case.",
+        "clinician_review_required": true
+      },
+      {
+        "gap_id": "preventive-gap-1",
+        "priority": "medium",
+        "title": "Preventive care gap",
+        "rationale": "annual diabetes review overdue",
+        "suggested_action": "Review the gap during the next synthetic handoff.",
+        "clinician_review_required": true
+      },
+      {
+        "gap_id": "diabetes-monitoring",
+        "priority": "medium",
+        "title": "Diabetes monitoring review",
+        "rationale": "Synthetic diabetes history suggests a monitoring and prevention review.",
+        "suggested_action": "Confirm routine monitoring and education topics in the handoff.",
+        "clinician_review_required": true
+      }
+    ],
+    "summary": [
+      "Synthetic care gaps were derived from follow-up timing, preventive review, and risk context.",
+      "A licensed clinician should review the handoff before any real-world action."
+    ],
+    "requires_clinician_review": true,
+    "synthetic_data_notice": "Synthetic example only. No real patient data or PHI.",
+    "disclaimer": "Synthetic demo output only. This does not diagnose, treat, replace professional care, or process PHI."
+  },
+  "follow_up_plan": {
+    "tool_name": "generate_follow_up_plan",
+    "request_id": "follow-up-demo-001",
+    "case_id": "synthetic-patient-001",
+    "recommended_follow_up_type": "prompt_clinician_review",
+    "timeframe": "within 24 to 72 hours",
+    "care_setting": "primary care",
+    "triage_level": "low",
+    "risk_level": "medium",
+    "preparation_notes": [
+      "Bring the synthetic symptom summary and medication list to the handoff.",
+      "Ask the clinician to review preventive gaps and monitoring needs.",
+      "Keep the highest-priority care gap visible during review."
+    ],
+    "monitoring_points": [
+      "Track whether the symptoms improve, worsen, or change.",
+      "Review preventive and medication reconciliation gaps.",
+      "Escalate urgently if new red-flag symptoms appear."
+    ],
+    "patient_actions": [
+      "Use the synthetic summary for the clinician handoff.",
+      "Bring any current medications to the review."
+    ],
+    "clinician_actions": [
+      "Review the care gaps and decide whether additional evaluation is needed.",
+      "Confirm the follow-up interval before closing the visit."
+    ],
+    "requires_clinician_review": true,
+    "summary": "Synthetic follow-up plan for a medium triage case with medium risk. This is for coordination only and not a treatment plan.",
+    "synthetic_data_notice": "Synthetic example only. No real patient data or PHI.",
+    "disclaimer": "Synthetic demo output only. This does not diagnose, treat, replace professional care, or process PHI."
+  },
+  "doctor_handoff_brief": "Synthetic clinician-support handoff: review the triage, risk, and care gaps before any real-world action.",
+  "patient_friendly_summary": "This synthetic workflow organizes a care team handoff for a demo case. It does not diagnose, treat, or prescribe, and a clinician should review the result.",
+  "fhir_resources_generated": ["Patient", "Encounter", "Observation", "Condition", "MedicationRequest", "Appointment", "CarePlan", "Provenance"],
+  "audit_trace": {
+    "tool_name": "generate_audit_trace",
+    "request_id": "audit-trace-demo-001",
+    "case_id": "synthetic-patient-001",
+    "generated_at": "2026-05-11T00:00:00Z",
+    "steps": [
+      {"step": "1", "name": "PHI safety scan", "status": "synthetic_only_confirmed", "evidence": "Synthetic data policy checked before any downstream coordination."},
+      {"step": "2", "name": "SHARP validation", "status": "valid_synthetic_context", "evidence": "Only synthetic demo context was accepted."},
+      {"step": "3", "name": "Triage and risk evaluation", "status": "completed", "evidence": "Urgency=low, risk=medium."},
+      {"step": "4", "name": "Care-gap detection", "status": "completed", "evidence": "3 synthetic care gaps identified."},
+      {"step": "5", "name": "Follow-up planning", "status": "completed", "evidence": "prompt_clinician_review"},
+      {"step": "6", "name": "FHIR-style export", "status": "completed", "evidence": "FHIR-style bundle prepared for demo interoperability."}
+    ],
+    "care_gap_count": 3,
+    "follow_up_type": "prompt_clinician_review",
+    "fhir_resources_referenced": ["Patient", "Encounter", "Observation", "Condition", "MedicationRequest", "Appointment", "CarePlan", "Provenance"],
+    "requires_clinician_review": true,
+    "synthetic_data_notice": "Synthetic example only. No real patient data or PHI.",
+    "disclaimer": "Synthetic demo output only. This does not diagnose, treat, replace professional care, or process PHI."
+  },
+  "agent_team_replay": {
+    "tool_name": "generate_agent_team_replay",
+    "replay_id": "team-replay-demo-001",
+    "request_id": "team-replay-demo-001",
+    "case_id": "synthetic-patient-001",
+    "team_roles": ["safety_guard", "triage_agent", "risk_agent", "care_gap_agent", "follow_up_agent", "reviewer"],
+    "sequence": [
+      {"step": 1, "agent": "safety_guard", "goal": "Confirm the demo is synthetic-only.", "result": "Synthetic case accepted and PHI scan completed."},
+      {"step": 2, "agent": "triage_agent", "goal": "Summarize urgency from the symptom context.", "result": "Urgency level identified as low."},
+      {"step": 3, "agent": "risk_agent", "goal": "Summarize the prevention/risk context.", "result": "Risk level identified as medium."},
+      {"step": 4, "agent": "care_gap_agent", "goal": "Find coordination gaps that the clinician should review.", "result": "Detected 3 care gaps."},
+      {"step": 5, "agent": "follow_up_agent", "goal": "Draft a follow-up plan for the handoff.", "result": "prompt_clinician_review"},
+      {"step": 6, "agent": "reviewer", "goal": "Check that the replay never claims diagnosis or treatment.", "result": "Clinician review required; no treatment claim issued."}
+    ],
+    "handoff_summary": "Synthetic agent replay showing safety, triage, risk, gap review, follow-up, and human review.",
+    "requires_clinician_review": true,
+    "synthetic_data_notice": "Synthetic example only. No real patient data or PHI.",
+    "disclaimer": "Synthetic demo output only. This does not diagnose, treat, replace professional care, or process PHI."
+  },
+  "disclaimers": [
+    "Synthetic demo output only. This does not diagnose, treat, replace professional care, or process PHI.",
+    "Clinician review required before any real-world action.",
+    "Synthetic data only; no real PHI is processed."
+  ],
+  "synthetic_data_notice": "Synthetic example only. No real patient data or PHI.",
+  "fhir_bundle": {
+    "resourceType": "Bundle",
+    "type": "collection",
+    "case_id": "synthetic-patient-001",
+    "case_label": "Demo Patient",
+    "synthetic_only": true,
+    "contains_phi": false,
+    "demo_use_only": true,
+    "synthetic_data_notice": "Synthetic example only. No real patient data or PHI.",
+    "disclaimer": "Synthetic demo output only. This does not diagnose, treat, replace professional care, or process PHI.",
+    "entry": [
+      {"resource": {"resourceType": "Patient", "id": "synthetic-patient-001"}},
+      {"resource": {"resourceType": "Encounter", "id": "synthetic-patient-001-encounter"}},
+      {"resource": {"resourceType": "Observation", "id": "synthetic-patient-001-triage"}},
+      {"resource": {"resourceType": "Observation", "id": "synthetic-patient-001-risk"}},
+      {"resource": {"resourceType": "Condition", "id": "synthetic-patient-001-condition"}},
+      {"resource": {"resourceType": "MedicationRequest", "id": "synthetic-patient-001-medication-request"}},
+      {"resource": {"resourceType": "Appointment", "id": "synthetic-patient-001-appointment"}},
+      {"resource": {"resourceType": "CarePlan", "id": "synthetic-patient-001-care-plan"}},
+      {"resource": {"resourceType": "Provenance", "id": "synthetic-patient-001-provenance"}}
+    ]
+  }
+}
