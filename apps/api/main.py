@@ -7,9 +7,13 @@ from app.routes import health, privacy, sharp, workflow, fhir, audit, demo, mcp_
 
 app = FastAPI(title="Cerelytic MediAssist API", version="1.0.0")
 
+_raw = os.getenv("ALLOWED_ORIGINS", "*")
+_origins = [o.strip() for o in _raw.split(",")] if _raw != "*" else ["*"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_origins,
+    allow_origin_regex=r"https://.*\.vercel\.app" if _raw == "*" else None,
     allow_methods=["*"],
     allow_headers=["*"],
 )
