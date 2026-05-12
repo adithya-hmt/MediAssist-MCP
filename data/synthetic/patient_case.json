@@ -1,0 +1,19 @@
+{
+  "patient_id": "synthetic-patient-001",
+  "encounter_id": "synthetic-encounter-001",
+  "name": "Demo Patient",
+  "source": "synthetic-demo",
+  "synthetic_only": true,
+  "age": 42,
+  "sex": "not specified",
+  "symptoms": ["persistent cough", "mild fever", "fatigue"],
+  "observations": {
+    "temperature_c": 38.1,
+    "heart_rate": 92,
+    "spo2": 97,
+    "respiratory_rate": 18
+  },
+  "history": ["synthetic asthma history"],
+  "medications": ["synthetic inhaler record"],
+  "notes": "Synthetic demo case for workflow testing only."
+}
